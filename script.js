@@ -24,7 +24,7 @@ const db = getFirestore(app);
 
 
 // ================= USER SUBMIT =================
-function kirimData() {
+window.kirimData = async function () {
   const nama = document.getElementById("nama").value.trim();
   const tanggal = document.getElementById("tanggal").value;
   const jamMulai = document.getElementById("jamMulai").value;
