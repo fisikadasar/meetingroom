@@ -1,0 +1,318 @@
+/* ================= RESET ================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ================= BODY ================= */
+body {
+  min-height: 100vh;
+  padding: 20px;
+  color: white;
+  text-align: center;
+
+  background: url("background.png") center center / cover no-repeat fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* overlay gelap + blur */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 15, 30, 0.45);
+  backdrop-filter: blur(7px);
+  z-index: -1;
+}
+
+/* ================= TITLE ================= */
+h1 {
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 22px;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+h2 {
+  margin-top: 35px;
+  margin-bottom: 15px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* ================= CARD FORM ================= */
+.card {
+  width: 90%;
+  max-width: 500px;
+  margin: auto;
+  padding: 26px;
+
+  background: rgba(20, 35, 60, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+}
+.jam-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 9px 0;
+}
+
+.jam-box input {
+  flex: 1;
+  margin: 0;
+}
+
+.jam-box span {
+  font-size: 14px;
+  color: white;
+  font-weight: 500;
+}
+/* ================= INPUT ================= */
+input,
+select {
+  width: 100%;
+  padding: 13px 14px;
+  margin: 9px 0;
+
+  border: none;
+  outline: none;
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.14);
+  color: white;
+  font-size: 15px;
+}
+
+/* placeholder */
+input::placeholder {
+  color: rgba(255,255,255,0.75);
+}
+
+/* date/time icon biar jelas */
+input[type="date"],
+input[type="time"] {
+  color-scheme: dark;
+}
+
+/* ================= BUTTON ================= */
+button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 12px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: linear-gradient(90deg, #06b6d4, #1d4ed8);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+/* ================= TABLE ================= */
+table {
+  width: 96%;
+  margin: 30px auto;
+  border-collapse: collapse;
+
+  background: rgba(20, 35, 60, 0.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border-radius: 16px;
+  overflow: hidden;
+
+  box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+}
+
+/* HEADER */
+th {
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+
+  background: rgba(255,255,255,0.10);
+  color: white;
+}
+
+/* DATA */
+td {
+  padding: 14px;
+  font-size: 15px;
+
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* hover row */
+tr:hover td {
+  background: rgba(255,255,255,0.07);
+}
+
+/* ================= BUTTON AKSI ================= */
+button.approve {
+  background: #22c55e;
+}
+
+button.reject {
+  background: #ef4444;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 28px;
+  }
+
+  .card {
+    width: 95%;
+    padding: 20px;
+  }
+
+  table {
+    width: 100%;
+    font-size: 12px;
+  }
+
+  th,
+  td {
+    padding: 10px 6px;
+  }
+}
+/* tombol aksi sejajar */
+td:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;          /* jarak antar tombol */
+  padding: 14px;
+}
+
+/* tombol approve + reject */
+td:last-child button {
+  width: 50px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+/* hover */
+td:last-child button:hover {
+  transform: scale(1.0);
+}
+
+/* hijau ceklis */
+button.approve {
+  background: #22c55e;
+  color: white;
+}
+
+/* merah X */
+button.reject {
+  background: #ef4444;
+  color: white;
+}
+border-radius:50%;
+width:40px;
+height:40px;
+
+/* tombol admin */
+td.aksi {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+}
+
+td.aksi button {
+  width: 42px;
+  height: 34px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.approve {
+  background: #22c55e;
+  color: white;
+}
+
+button.reject {
+  background: #ef4444;
+  color: white;
+}
+
+button.delete {
+  background: #dc2626;
+  color: white;
+}
+
+/* judul tiap tabel */
+h2 {
+  margin-top: 35px;
+  margin-bottom: 10px;
+}
+/* tombol aksi admin */
+td.aksi {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+/* tombol kecil */
+td.aksi button {
+  width: 42px;
+  height: 34px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* status */
+.status-yes {
+  color: #22c55e;
+  font-weight: bold;
+}
+
+.status-no {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+/* hapus */
+button.delete {
+  background: #dc2626;
+  color: white;
+}
