@@ -1,13 +1,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc,
-updateDoc
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -22,180 +19,42 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
-// ================= USER SUBMIT =================
+// tombol kirim
 window.kirimData = async function () {
-  const nama = document.getElementById("nama").value.trim();
+  const nama = document.getElementById("nama").value;
   const tanggal = document.getElementById("tanggal").value;
   const jamMulai = document.getElementById("jamMulai").value;
   const jamSelesai = document.getElementById("jamSelesai").value;
-  const keterangan = document.getElementById("keterangan").value.trim();
+  const keterangan = document.getElementById("keterangan").value;
 
-  if (
-    nama === "" ||
-    tanggal === "" ||
-    jamMulai === "" ||
-    jamSelesai === "" ||
-    keterangan === ""
-  ) {
-    alert("Semua field wajib diisi!");
-    return;
-  }
-
-  if (jamSelesai <= jamMulai) {
-    alert("Jam selesai harus lebih besar dari jam mulai!");
-    return;
-  }
-
-  const data = {
+  await addDoc(collection(db, "peminjaman"), {
     nama,
     tanggal,
     waktu: jamMulai + " - " + jamSelesai,
     keterangan
-  };
-
-  let pending = getPending();
-  pending.push(data);
-
-  localStorage.setItem("pending", JSON.stringify(pending));
-
-  alert("Data dikirim!");
-
-  location.reload();
-}
-
-// ================= USER PAGE =================
-function tampilkanApproved() {
-  let data = getApproved();
-  let tabel = document.getElementById("tabelData");
-
-  if (!tabel) return;
-
-  tabel.innerHTML = "";
-
-  data.forEach(item => {
-    tabel.innerHTML += `
-      <tr>
-        <td>${item.nama}</td>
-        <td>${item.tanggal}</td>
-        <td>${item.waktu}</td>
-        <td>${item.keterangan}</td>
-      </tr>
-    `;
-  });
-}
-
-// ================= ADMIN PENDING =================
-function tampilkanPending() {
-  let data = getPending();
-  let tabel = document.getElementById("pendingData");
-
-  if (!tabel) return;
-
-  tabel.innerHTML = "";
-
-  data.forEach((item, index) => {
-    tabel.innerHTML += `
-      <tr>
-        <td>${item.nama}</td>
-        <td>${item.tanggal}</td>
-        <td>${item.waktu}</td>
-        <td>${item.keterangan}</td>
-        <td class="aksi">
-          <button class="approve" onclick="approve(${index})">✔</button>
-          <button class="reject" onclick="reject(${index})">✖</button>
-        </td>
-      </tr>
-    `;
-  });
-}
-
-// ================= APPROVE =================
-function approve(index) {
-  let pending = getPending();
-  let approved = getApproved();
-
-  approved.push(pending[index]);
-  pending.splice(index, 1);
-
-  localStorage.setItem("pending", JSON.stringify(pending));
-  localStorage.setItem("approved", JSON.stringify(approved));
-
-  refreshAdmin();
-}
-
-// ================= REJECT =================
-function reject(index) {
-  let pending = getPending();
-  let rejected = getRejected();
-
-  rejected.push(pending[index]);
-  pending.splice(index, 1);
-
-  localStorage.setItem("pending", JSON.stringify(pending));
-  localStorage.setItem("rejected", JSON.stringify(rejected));
-
-  refreshAdmin();
-}
-
-// ================= HISTORY =================
-function tampilkanHistory() {
-  let approved = getApproved();
-  let rejected = getRejected();
-  let tabel = document.getElementById("historyData");
-
-  if (!tabel) return;
-
-  tabel.innerHTML = "";
-
-  approved.forEach((item, index) => {
-    tabel.innerHTML += `
-      <tr>
-        <td>${item.nama}</td>
-        <td>${item.tanggal}</td>
-        <td>${item.waktu}</td>
-        <td>${item.keterangan}</td>
-        <td class="status-yes">✅ Disetujui</td>
-        <td class="aksi">
-          <button class="delete" onclick="hapusApproved(${index})">🗑</button>
-        </td>
-      </tr>
-    `;
   });
 
-  rejected.forEach((item, index) => {
-    tabel.innerHTML += `
-      <tr>
-        <td>${item.nama}</td>
-        <td>${item.tanggal}</td>
-        <td>${item.waktu}</td>
-        <td>${item.keterangan}</td>
-        <td class="status-no">❌ Ditolak</td>
-        <td class="aksi">
-          <button class="delete" onclick="hapusRejected(${index})">🗑</button>
-        </td>
-      </tr>
-    `;
+  alert("Berhasil dikirim");
+};
+
+// tampilkan data realtime
+const tabel = document.getElementById("tabelData");
+
+if (tabel) {
+  onSnapshot(collection(db, "peminjaman"), (snapshot) => {
+    tabel.innerHTML = "";
+
+    snapshot.forEach((doc) => {
+      const d = doc.data();
+
+      tabel.innerHTML += `
+        <tr>
+          <td>${d.nama}</td>
+          <td>${d.tanggal}</td>
+          <td>${d.waktu}</td>
+          <td>${d.keterangan}</td>
+        </tr>
+      `;
+    });
   });
-}
-
-// ================= HAPUS =================
-function hapusApproved(index) {
-  let data = getApproved();
-  data.splice(index, 1);
-  localStorage.setItem("approved", JSON.stringify(data));
-  refreshAdmin();
-}
-
-function hapusRejected(index) {
-  let data = getRejected();
-  data.splice(index, 1);
-  localStorage.setItem("rejected", JSON.stringify(data));
-  refreshAdmin();
-}
-
-// ================= REFRESH =================
-function refreshAdmin() {
-  tampilkanPending();
-  tampilkanHistory();
 }
