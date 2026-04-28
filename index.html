@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Peminjaman Ruang</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Peminjaman Ruang</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -12,27 +12,30 @@
 <div class="card">
   <input type="text" id="nama" placeholder="Nama">
   <input type="date" id="tanggal">
+
   <div class="jam-box">
-  <input type="time" id="jamMulai">
-  <span>s/d</span>
-  <input type="time" id="jamSelesai">
-</div>
+    <input type="time" id="jamMulai">
+    <span>s/d</span>
+    <input type="time" id="jamSelesai">
+  </div>
+
   <input type="text" id="keterangan" placeholder="Keterangan">
 
-  <button type="button" onclick="kirimData()">Kirim</button></div>
+  <button type="button" onclick="kirimData()">Kirim</button>
+</div>
 
 <table>
-  <thead>
-    <tr>
-      <th>Nama</th>
-      <th>Tanggal</th>
-      <th>Waktu</th>
-      <th>Keterangan</th>
-    </tr>
-  </thead>
-  <tbody id="tabelData"></tbody>
+<thead>
+<tr>
+<th>Nama</th>
+<th>Tanggal</th>
+<th>Waktu</th>
+<th>Keterangan</th>
+</tr>
+</thead>
+<tbody id="tabelData"></tbody>
 </table>
 
-<script type="module" src="script.js"></script>
+<script type="module" src="script.js?v=1"></script>
 </body>
 </html>
